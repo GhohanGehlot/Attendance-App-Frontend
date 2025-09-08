@@ -1,8 +1,21 @@
-import { SafeAreaView, Text } from "react-native";
-import { View } from "react-native-web";
+import { Pressable, SafeAreaView, Text } from "react-native";
+import AttendanceBox from "../components/AttendanceBox";
+import { ScrollView } from "react-native-gesture-handler";
+
 
 export default function Home(){
     return(
-           <Text>Home Page</Text>    
+      <SafeAreaView>
+        <ScrollView>
+          <AttendanceBox/>
+          <AttendanceBox/>
+          <AttendanceBox/>
+          
+
+
+        </ScrollView>
+        
+      </SafeAreaView>
+    
     );
 }

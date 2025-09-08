@@ -3,8 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import Home from "./Home";
 import Login from "./login";
 
-import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
-import '@/my-expo-app/global.css';
 
 export default function Layout(){
 
