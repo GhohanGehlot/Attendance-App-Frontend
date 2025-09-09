@@ -1,6 +1,6 @@
 import { useNavigation } from "expo-router";
 import { Pressable, Text, TextInput, View } from "react-native";
-import { styles } from "../Styles/Auth.js";
+import { styles } from "../Styles/login.js";
 
 export default function Login() {
 
