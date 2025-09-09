@@ -24,8 +24,9 @@ export  function Layout(){
     return(
         
             <Drawer.Navigator initialRouteName="Home">
-                <Drawer.Screen name="Home" component={Home} /> 
-                <Drawer.Screen name="Calendar" component={Calendar}/>
+                <Drawer.Screen name="Home" component={CalendarLayout} /> 
+                
+                
             </Drawer.Navigator>
        
     )
@@ -43,5 +44,17 @@ export  function AuthLayout(){
       <Stack.Screen name="Signup" component={Signup} />
     </Stack.Navigator>
   );
+}
+
+export function CalendarLayout(){
+    const Stack = createStackNavigator();
+
+    return(
+    <Stack.Navigator screenOptions={{headerShown:false}}>
+      <Stack.Screen name="Home" component={Home} /> 
+       <Stack.Screen name="Calendar" component={Calendar}/>
+    </Stack.Navigator>
+
+    )
 }
 
