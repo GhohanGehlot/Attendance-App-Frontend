@@ -24,7 +24,8 @@ export  function Layout(){
     return(
         
             <Drawer.Navigator initialRouteName="Home">
-                <Drawer.Screen name="Home" component={CalendarLayout} /> 
+            <Drawer.Screen name="Home" component={CalendarLayout} /> 
+            <Drawer.Screen name="Logout" component={AuthLayout} />
                 
                 
             </Drawer.Navigator>
@@ -36,10 +37,10 @@ export  function Layout(){
 export  function AuthLayout(){
 
     const Stack = createStackNavigator();
-
+    
      return (
         
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown:false}}>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
     </Stack.Navigator>

@@ -5,12 +5,15 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f2f2f2",
+    margin:0,
   },
   calendar: {
     marginVertical: 10,
+    paddingBottom: 0,
+    marginBottom: 0,
   },
   statsContainer: {
-    marginTop: 20,
+    marginTop: 0,
     padding: 20,
     backgroundColor: "#fff",
     marginHorizontal: 10,

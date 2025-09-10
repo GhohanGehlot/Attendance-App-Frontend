@@ -1,22 +1,64 @@
-import { Pressable, SafeAreaView, Text, View } from "react-native";
+import { Modal, Pressable, SafeAreaView, Text, TextInput, View } from "react-native";
 import AttendanceBox from "../components/AttendanceBox";
 import { ScrollView } from "react-native-gesture-handler";
 import AddButton from "../components/floatingAdd";
-
+import { useState } from "react";
+import { styles } from "../Styles/home.js";
+import { useStore } from "../Store/subject.store.js";
 
 
 
 export default function Home(){
 
+  const [modalVisible , setModalVisible] = useState(false);
+  const [subjectName , setSubjectName] = useState(""); 
+
+   const subjects = useStore((state) => state.subjects);
+   const setSubject = useStore((state) => state.setSubject);
+
+  function onPress(){
+     setModalVisible(false);
+     setSubject(subjectName);  
+
+  }
+  
+
     return(
       <SafeAreaView style={{ flex: 1 }}>
+
+          <Modal
+            visible={modalVisible}
+            animationType="slide"
+            transparent={true}
+          >
+            <View style={styles.modalWrapper}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>Add Subject</Text>
+                <TextInput 
+                  style={styles.input} 
+                  placeholder="Enter subject name"
+                  value={subjectName} 
+                  onChangeText={(text) => setSubjectName(text)} 
+                />
+                <Pressable style={styles.submitBtn} onPress={() => onPress()}>
+                  <Text style={styles.submitText}>Submit</Text>
+                </Pressable>
+              </View>
+            </View>
+          </Modal>
+
+
       <View style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
-          <AttendanceBox onPress/>
-          <AttendanceBox />
-          <AttendanceBox />
+        <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
+
+        { subjects.map((subject) => {
+           return <AttendanceBox key={subject.id} subjectName={subject.name} subjectId={subject.id}  />
+        })}
+          
+          
+
         </ScrollView>
-        <AddButton onPress={() => console.log("Add clicked!")} />
+        <AddButton onPress={() => {setModalVisible(!modalVisible);}}/>
       </View>
     </SafeAreaView>
     );
