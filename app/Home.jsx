@@ -52,6 +52,7 @@ export default function Home(){
         <ScrollView contentContainerStyle={{ paddingBottom: 120 }}>
 
         { subjects.map((subject) => {
+          if(subject.name === '') return;
            return <AttendanceBox key={subject.id} subjectName={subject.name} subjectId={subject.id}  />
         })}
           

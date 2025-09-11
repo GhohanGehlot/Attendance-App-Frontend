@@ -14,8 +14,6 @@ export default function Calendar({ route }) {
     <View style={{ flex: 1 }}>
        
       <View style={{ height: 400 }}>
-
-
         
          
       <CalendarProvider
@@ -28,17 +26,23 @@ export default function Calendar({ route }) {
                 pagingEnabled={true}
                 style={styles.calendar}
                 markingType={'custom'}
+
+
+               
+
+
+
                 dayComponent={({ date, state }) => (
-                  <View>
+                  <View style={{height: 35 , width: 45 , alignItems: "center" }}>
                     <Pressable onPress={() => {
                       setSelectedDate(date.dateString);
                       setVisibleMenu(true);
-                    }}>
-                      <Text>{date.day}</Text>
+                      }}>
+                      <Text style= {{fontSize: 15}}>{date.day}</Text>
                     </Pressable>
 
                     {visibleMenu && selectedDate === date.dateString && (
-                      <View>
+                     
                         <Menu
                           visible={visibleMenu}
                           onDismiss={() => setVisibleMenu(false)}
@@ -47,21 +51,14 @@ export default function Calendar({ route }) {
                           <Menu.Item title="Present" />
                           <Menu.Item title="Absent" />
                         </Menu>
-                      </View>
+                     
                     )}
                   </View>
                 )}
 
-
-    onDayPress={(date) => {
-      setSelectedDate(date.dateString);
-      setVisibleMenu(true);
-    }}
-  />
-            
-
-          
-
+             
+            />      
+                       
       </CalendarProvider>
 
         
@@ -77,22 +74,22 @@ export default function Calendar({ route }) {
 
         <View style={styles.statsRow}>
           <Text style={styles.statsLabel}>Attendance Percentage:</Text>
-          <Text style={styles.statsValue}>--%</Text>
+          <Text style={styles.statsValue}>75%</Text>
         </View>
 
         <View style={styles.statsRow}>
           <Text style={styles.statsLabel}>Total Days Present:</Text>
-          <Text style={styles.statsValue}>--</Text>
+          <Text style={styles.statsValue}>3</Text>
         </View>
 
         <View style={styles.statsRow}>
           <Text style={styles.statsLabel}>Total Days Absent:</Text>
-          <Text style={styles.statsValue}>--</Text>
+          <Text style={styles.statsValue}>1</Text>
         </View>
 
         <View style={styles.statsRow}>
           <Text style={styles.statsLabel}>Overall Total Days:</Text>
-          <Text style={styles.statsValue}>--</Text>
+          <Text style={styles.statsValue}>4</Text>
         </View>
       </View>
     </View>
