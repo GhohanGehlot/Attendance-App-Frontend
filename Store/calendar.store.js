@@ -8,7 +8,11 @@ export const useStore = create(
     (set, get) => ({
       attendance: {},
       attendanceTracker : { present : 0 , absent : 0},
-      
+      attendancePerc : () => {
+        const {present , absent} = get().attendanceTracker;
+        if(present + absent === 0) return 0 ;
+        return Math.floor((present/(present + absent)) * 100)
+      },
       
     // ({ attendance : { ...state.attendance , [date] : "present"}})
       markPresent : (date) => set((state) => {
@@ -34,7 +38,7 @@ export const useStore = create(
 
       presentAttendanceTracker : () => set((state) => ({attendanceTracker : { ...state.attendanceTracker ,present: state.attendanceTracker.present + 1 }})),
       absentAttendanceTracker : () => set((state) => ({ attendanceTracker : {  ...state.attendanceTracker , absent : state.attendanceTracker.absent + 1}})),
-
+      
       
     }),
     {

@@ -20,6 +20,7 @@ export default function Calendar({ route }) {
   const attendanceTracker = useStore((state) => state.attendanceTracker);
   const presentAttendanceTracker = useStore((state) => state.presentAttendanceTracker);
   const absentAttendanceTracker = useStore((state) => state.absentAttendanceTracker);
+  const attendancePerc = useStore((state) => state.attendancePerc);
   
 
 
@@ -60,12 +61,9 @@ export default function Calendar({ route }) {
    
   }
  
-    let totalPresentDays = attendanceTracker.present;
-    let totalAbsentDays = attendanceTracker.absent;
-    let totalDays = totalPresentDays + totalAbsentDays;
-    let attendancePerc = Math.floor(totalPresentDays/totalDays * 100);
- 
-
+    
+    
+    
   return (
     
     <View style={{ flex: 1 }}>
@@ -135,22 +133,22 @@ export default function Calendar({ route }) {
 
         <View style={styles.statsRow}>
           <Text style={styles.statsLabel}>Attendance Percentage:</Text>
-          <Text style={styles.statsValue}>{`${attendancePerc}% `}</Text>
+          <Text style={styles.statsValue}>{`${attendancePerc()}% `}</Text>
         </View>
 
         <View style={styles.statsRow}>
           <Text style={styles.statsLabel}>Total Days Present:</Text>
-          <Text style={styles.statsValue}>{totalPresentDays}</Text>
+          <Text style={styles.statsValue}>{attendanceTracker.present}</Text>
         </View>
 
         <View style={styles.statsRow}>
           <Text style={styles.statsLabel}>Total Days Absent:</Text>
-          <Text style={styles.statsValue}>{totalAbsentDays}</Text>
+          <Text style={styles.statsValue}>{attendanceTracker.absent}</Text>
         </View>
 
         <View style={styles.statsRow}>
           <Text style={styles.statsLabel}>Overall Total Days:</Text>
-          <Text style={styles.statsValue}>{totalDays}</Text>
+          <Text style={styles.statsValue}>{attendanceTracker.present + attendanceTracker.absent}</Text>
         </View>
       </View>
     </View>

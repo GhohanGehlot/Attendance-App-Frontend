@@ -4,7 +4,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import AddButton from "../components/floatingAdd";
 import { useState } from "react";
 import { styles } from "../Styles/home.js";
-import { useStore } from "../Store/subject.store.js";
+import { useSubject } from "../Store/subject.store.js";
 
 
 
@@ -13,8 +13,8 @@ export default function Home(){
   const [modalVisible , setModalVisible] = useState(false);
   const [subjectName , setSubjectName] = useState(""); 
 
-   const subjects = useStore((state) => state.subjects);
-   const setSubject = useStore((state) => state.setSubject);
+   const subjects = useSubject((state) => state.subjects);
+   const setSubject = useSubject((state) => state.setSubject);
    
 
   function onPress(){

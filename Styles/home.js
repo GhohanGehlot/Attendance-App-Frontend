@@ -107,6 +107,15 @@ submitText: {
   fontWeight: "bold",
 },
 
+deleteButton : {
+  backgroundColor: "red",
+      paddingHorizontal: 12,
+        paddingVertical: 6,
+       borderRadius: 6,
+        alignItems: "center",
+            justifyContent: "center",
+}
+
 });
 
 
