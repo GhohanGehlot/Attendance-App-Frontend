@@ -3,28 +3,33 @@ import { CalendarList, CalendarProvider } from "react-native-calendars";
 import {styles} from "../Styles/calendar";
 import { Menu } from "react-native-paper";
 import { useState } from "react";
+import { useStore } from "../Store/calendar.store";
 
 export default function Calendar({ route }) {
 
   const {id , subject} = route.params;
-  const [visibleMenu , setVisibleMenu] = useState(false);
-  const [menuDate , setMenuDate] = useState("");
-  const [attendance , setAttendance ] = useState({});
-  const [attendanceTracker , setAttendanceTracker] = useState({
-    present : 0, 
-    absent : 0,
-    
-  })
+  const [visibleMenu , setVisibleMenu] = useState(false); 
+  const [menuDate , setMenuDate] = useState(""); 
+  
+ 
+
+  const attendance = useStore((state) => state.attendance);
+  const markPresent = useStore((state => state.markPresent));
+  const markAbsent = useStore((state) => state.markAbsent);
+  const clearAttendance = useStore((state) => state.clearAttendance);
+  const attendanceTracker = useStore((state) => state.attendanceTracker);
+  const presentAttendanceTracker = useStore((state) => state.presentAttendanceTracker);
+  const absentAttendanceTracker = useStore((state) => state.absentAttendanceTracker);
+  const clearAttendanceTracker = useStore((state) => state.clearAttendanceTracker);
+
 
 
   function present(date){
     if(attendance[date] === "present" || attendance[date] === "absent"){
       return;
     }
-    setAttendance(prev => ({
-      ...prev , [date] : "present"
-    }))
-    setAttendanceTracker({ present: attendanceTracker.present + 1 , absent : attendanceTracker.absent});
+    markPresent(date);
+    presentAttendanceTracker();
     setVisibleMenu(false);
     
                   
@@ -35,10 +40,8 @@ export default function Calendar({ route }) {
     if(attendance[date] === "present" || attendance[date] === "absent"){
       return;
     }
-     setAttendance(prev => ({
-      ...prev , [date] : "absent"
-    }))
-    setAttendanceTracker({ present: attendanceTracker.present , absent : attendanceTracker.absent + 1});
+     markAbsent(date);
+    absentAttendanceTracker();
     setVisibleMenu(false);
        
   }
@@ -47,14 +50,8 @@ export default function Calendar({ route }) {
     if(attendance[date] === ""){
       return;
     }
-    const newAttendance = {...attendance};
-    delete newAttendance[date];
-    setAttendance(newAttendance);
-     if(attendance[date] === "present"){
-      setAttendanceTracker({ present: attendanceTracker.present - 1 , absent : attendanceTracker.absent});
-    }else if(attendance[date] === "absent") {
-     setAttendanceTracker({ present: attendanceTracker.present , absent : attendanceTracker.absent - 1});
-    }
+    clearAttendance(date);
+    clearAttendanceTracker(date);
     setVisibleMenu(false);
 
    

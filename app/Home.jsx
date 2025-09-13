@@ -18,7 +18,8 @@ export default function Home(){
 
   function onPress(){
      setModalVisible(false);
-     setSubject(subjectName);  
+     setSubject(subjectName);
+     setSubjectName('');    
 
   }
   
@@ -28,7 +29,7 @@ export default function Home(){
 
           <Modal
             visible={modalVisible}
-            animationType="slide"
+            animationType="fade"
             transparent={true}
           >
             <View style={styles.modalWrapper}>
