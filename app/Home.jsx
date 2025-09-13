@@ -15,6 +15,7 @@ export default function Home(){
 
    const subjects = useStore((state) => state.subjects);
    const setSubject = useStore((state) => state.setSubject);
+   
 
   function onPress(){
      setModalVisible(false);

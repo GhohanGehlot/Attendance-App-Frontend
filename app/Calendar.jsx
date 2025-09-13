@@ -20,7 +20,7 @@ export default function Calendar({ route }) {
   const attendanceTracker = useStore((state) => state.attendanceTracker);
   const presentAttendanceTracker = useStore((state) => state.presentAttendanceTracker);
   const absentAttendanceTracker = useStore((state) => state.absentAttendanceTracker);
-  const clearAttendanceTracker = useStore((state) => state.clearAttendanceTracker);
+  
 
 
 
@@ -50,8 +50,11 @@ export default function Calendar({ route }) {
     if(attendance[date] === ""){
       return;
     }
+    console.log(attendance);
+
     clearAttendance(date);
-    clearAttendanceTracker(date);
+    
+    
     setVisibleMenu(false);
 
    
@@ -70,11 +73,10 @@ export default function Calendar({ route }) {
       <View style={{ height: 400 }}>
         
          
-      <CalendarProvider
-        onDateChanged = {(date) => {console.log(date)}} 
-       >
-
+      <CalendarProvider>
+   
           <CalendarList
+                id={id}
                 futureScrollRange={24}
                 horizontal={true}
                 pagingEnabled={true}
@@ -82,8 +84,7 @@ export default function Calendar({ route }) {
                 markingType={'custom'}
                 
                
-
-                dayComponent={({ date, state }) => {
+                dayComponent={({ date }) => {
 
                   const status = attendance[date.dateString];
                   

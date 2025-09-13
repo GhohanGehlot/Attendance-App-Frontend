@@ -8,7 +8,7 @@ export const useStore = create(
       subjects: [],
       setSubject: (name) =>
         set((state) => ({
-          subjects: [...state.subjects, { id: Date.now(), name }],
+          subjects: [...state.subjects, { id: Date.now(), name : name }],
         })),
       removeSubject: (id) =>
         set((state) => ({
