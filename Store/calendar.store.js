@@ -6,41 +6,106 @@ import { createJSONStorage, persist } from "zustand/middleware";
 export const useStore = create(
   persist(
     (set, get) => ({
-      attendance: {},
-      attendanceTracker : { present : 0 , absent : 0},
+      
+      attendance : {},
+
+      addSubjectAttendance: (subjectId) => set((state) => ({
+            attendance: {
+              ...state.attendance,
+              [subjectId]: { days: {}, attendanceTracker: { present: 0, absent: 0 } }
+            }
+          })),
+      
 
       
-       attendancePerc : () => {
-        const {present , absent} = get().attendanceTracker;
+       attendancePerc : (subjectId) => {
+        const tracker = get().attendance[subjectId]?.attendanceTracker || { present : 0 , absent : 0};
+        const { present , absent } = tracker;
         if(present + absent === 0) return 0 ;
         return Math.floor((present/(present + absent)) * 100)
       },
       
-    // ({ attendance : { ...state.attendance , [date] : "present"}})
-      markPresent : (date) => set((state) => {
-        const newStatus = { attendance : { ...state.attendance , [date] : "present"}}
+    
+      markPresent : (subjectId ,date) => set((state) => {
+      const newStatus =  {attendance: {
+                  ...state.attendance,
+                  [subjectId]: {
+                    ...state.attendance[subjectId],
+                    days: {
+                      ...state.attendance[subjectId]?.days,
+                      [date]: "present"
+                    },
+                    attendanceTracker: {
+                      absent : (state.attendance[subjectId]?.attendanceTracker.absent || 0) ,
+                      present: (state.attendance[subjectId]?.attendanceTracker.present || 0) + 1
+                    }
+                  }
+                }}
+
         return newStatus;
       } ),
-      markAbsent : (date) => set((state) => ({attendance : { ...state.attendance , [date] : "absent"}})),
+      markAbsent : (subjectId ,date) => set((state) => {
+      const newStatus =  {attendance: {
+                  ...state.attendance,
+                  [subjectId]: {
+                    ...state.attendance[subjectId],
+                    days: {
+                      ...state.attendance[subjectId]?.days,
+                      [date]: "absent"
+                    },
+                    attendanceTracker: {
+                      present : (state.attendance[subjectId]?.attendanceTracker.present || 0),
+                      absent: (state.attendance[subjectId]?.attendanceTracker.absent || 0) + 1
+                    }
+                  }
+                }}
+
+        return newStatus;
+      } ),
 
 
-      clearAttendance : (date) => set((state) => {
+      clearAttendance : (subjectId,date) => set((state) => {
         
-        const newAttendance = {  ...state.attendance};
+        const newAttendance = {  ...state.attendance[subjectId]?.days};
         delete newAttendance[date];
-         if(state.attendance[date] === "present"){
-          return {attendanceTracker : { ...state.attendanceTracker ,present: state.attendanceTracker.present - 1 } , attendance : newAttendance}
-        }else if(state.attendance[date] === "absent"){
-          return {attendanceTracker : { ...state.attendanceTracker , absent : state.attendanceTracker.absent - 1} , attendance : newAttendance}
-        }
+
+         if(state.attendance[subjectId]?.days[date] === "present"){
+
+          return { attendance : {
+            ...state.attendance, 
+            [subjectId] : {
+              ...state.attendance[subjectId],
+             
+                days : newAttendance,
+              
+              attendanceTracker: {
+                ...state.attendance[subjectId]?.attendanceTracker,
+                present: state.attendance[subjectId]?.attendanceTracker.present - 1 ,
+              }
+
+            }
+          }}
+        }else 
+          if(state.attendance[subjectId]?.days[date] === "absent"){
+
+          return { attendance : {
+            ...state.attendance, 
+            [subjectId] : {
+              ...state.attendance[subjectId],
+              
+                days : newAttendance,
+        
+              attendanceTracker: {
+                ...state.attendance[subjectId]?.attendanceTracker,
+                absent: state.attendance[subjectId]?.attendanceTracker.absent - 1,
+              }
+
+            }
+          }}
         
 
         
-      }),
-
-      presentAttendanceTracker : () => set((state) => ({attendanceTracker : { ...state.attendanceTracker ,present: state.attendanceTracker.present + 1 }})),
-      absentAttendanceTracker : () => set((state) => ({ attendanceTracker : {  ...state.attendanceTracker , absent : state.attendanceTracker.absent + 1}})),
-      
+      }}),
       
     }),
     {

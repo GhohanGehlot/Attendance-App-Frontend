@@ -3,23 +3,21 @@ import { styles } from "../Styles/home.js";
 import { useNavigation } from "expo-router";
 import { useSubject } from "../Store/subject.store.js";
 import { useStore } from "../Store/calendar.store.js";
-import { useState } from "react";
 
 
 function AttendanceBox({ subjectName , subjectId }) {
 
     const navigate = useNavigation();
-
-    const [ attendancePercentage , setAttendancePercentage] = useState();
     
-    const removeSubject = useSubject((state) => state.removeSubject);
-    // const attendancePerc = useStore((state) => state.attendancePerc);
-    const present = useStore((state) => state.attendanceTracker.present);
-  const absent = useStore((state) => state.attendanceTracker.absent);
+  const removeSubject = useSubject((state) => state.removeSubject);
 
-   const attendancePerc = present + absent === 0 
-  ? 0 
-   : Math.floor((present / (present + absent)) * 100);
+ const subjectAttendance = useStore((state) => state.attendance[subjectId])
+
+  const tracker = subjectAttendance?.attendanceTracker ?? {present : 0 , absent : 0};
+  
+   const attendancePerc = tracker.present + tracker.absent === 0 
+     ? 0 
+   : Math.floor((tracker.present / (tracker.present + tracker.absent)) * 100);
 
 
     function onDelete(id){

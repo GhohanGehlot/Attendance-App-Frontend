@@ -17,20 +17,16 @@ export default function Calendar({ route }) {
   const markPresent = useStore((state => state.markPresent));
   const markAbsent = useStore((state) => state.markAbsent);
   const clearAttendance = useStore((state) => state.clearAttendance);
-  const attendanceTracker = useStore((state) => state.attendanceTracker);
-  const presentAttendanceTracker = useStore((state) => state.presentAttendanceTracker);
-  const absentAttendanceTracker = useStore((state) => state.absentAttendanceTracker);
   const attendancePerc = useStore((state) => state.attendancePerc);
   
 
 
 
-  function present(date){
-    if(attendance[date] === "present" || attendance[date] === "absent"){
+  function present( date){
+    if(attendance[id]?.days[date] === "present" || attendance[id]?.days[date] === "absent"){
       return;
     }
-    markPresent(date);
-    presentAttendanceTracker();
+    markPresent(id ,date);
     setVisibleMenu(false);
     
                   
@@ -38,22 +34,21 @@ export default function Calendar({ route }) {
   }
 
   function absent(date){
-    if(attendance[date] === "present" || attendance[date] === "absent"){
+    if(attendance[id]?.days[date] === "present" ||attendance[id]?.days[date] === "absent"){
       return;
     }
-     markAbsent(date);
-    absentAttendanceTracker();
+     markAbsent(id ,date);
     setVisibleMenu(false);
        
   }
 
   function Clear(date){
-    if(attendance[date] === ""){
+    if(attendance[id]?.days[date] === ""){
       return;
     }
-    console.log(attendance);
 
-    clearAttendance(date);
+
+    clearAttendance(id ,date);
     
     
     setVisibleMenu(false);
@@ -62,6 +57,8 @@ export default function Calendar({ route }) {
   }
  
     
+
+  const tracker = attendance[id]?.attendanceTracker ?? { present: 0, absent: 0 };
     
     
   return (
@@ -84,7 +81,7 @@ export default function Calendar({ route }) {
                
                 dayComponent={({ date }) => {
 
-                  const status = attendance[date.dateString];
+                  const status = attendance[id]?.days[date.dateString];
                   
                  return(
                   <View style={{height: 35 , width: 45 , alignItems: "center" , backgroundColor: status === "present" ? "green" : status === "absent" ? "red" : "white" }}>
@@ -133,22 +130,22 @@ export default function Calendar({ route }) {
 
         <View style={styles.statsRow}>
           <Text style={styles.statsLabel}>Attendance Percentage:</Text>
-          <Text style={styles.statsValue}>{`${attendancePerc()}% `}</Text>
+          <Text style={styles.statsValue}>{`${attendancePerc(id)}% `}</Text>
         </View>
 
         <View style={styles.statsRow}>
           <Text style={styles.statsLabel}>Total Days Present:</Text>
-          <Text style={styles.statsValue}>{attendanceTracker.present}</Text>
+          <Text style={styles.statsValue}>{tracker.present}</Text>
         </View>
 
         <View style={styles.statsRow}>
           <Text style={styles.statsLabel}>Total Days Absent:</Text>
-          <Text style={styles.statsValue}>{attendanceTracker.absent}</Text>
+          <Text style={styles.statsValue}>{tracker.absent}</Text>
         </View>
 
         <View style={styles.statsRow}>
           <Text style={styles.statsLabel}>Overall Total Days:</Text>
-          <Text style={styles.statsValue}>{attendanceTracker.present + attendanceTracker.absent}</Text>
+          <Text style={styles.statsValue}>{tracker.present + tracker.absent}</Text>
         </View>
       </View>
     </View>

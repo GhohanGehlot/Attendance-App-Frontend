@@ -6,10 +6,14 @@ export const useSubject = create(
   persist(
     (set, get) => ({
       subjects: [],
+
+
       setSubject: (name) =>
         set((state) => ({
-          subjects: [...state.subjects, { id: Date.now(), name,  }],
+          subjects: [...state.subjects, { id: Date.now(), name  }],
         })),
+
+        
       removeSubject: (id) =>
         set((state) => ({
           subjects: state.subjects.filter((s) => s.id !== id),
