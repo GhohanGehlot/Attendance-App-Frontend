@@ -8,7 +8,7 @@ export const useSubject = create(
       subjects: [],
       setSubject: (name) =>
         set((state) => ({
-          subjects: [...state.subjects, { id: Date.now(), name : name }],
+          subjects: [...state.subjects, { id: Date.now(), name,  }],
         })),
       removeSubject: (id) =>
         set((state) => ({

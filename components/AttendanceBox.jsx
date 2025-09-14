@@ -3,14 +3,24 @@ import { styles } from "../Styles/home.js";
 import { useNavigation } from "expo-router";
 import { useSubject } from "../Store/subject.store.js";
 import { useStore } from "../Store/calendar.store.js";
+import { useState } from "react";
 
 
 function AttendanceBox({ subjectName , subjectId }) {
 
     const navigate = useNavigation();
+
+    const [ attendancePercentage , setAttendancePercentage] = useState();
     
     const removeSubject = useSubject((state) => state.removeSubject);
-    const attendancePerc = useStore((state) => state.attendancePerc);
+    // const attendancePerc = useStore((state) => state.attendancePerc);
+    const present = useStore((state) => state.attendanceTracker.present);
+  const absent = useStore((state) => state.attendanceTracker.absent);
+
+   const attendancePerc = present + absent === 0 
+  ? 0 
+   : Math.floor((present / (present + absent)) * 100);
+
 
     function onDelete(id){
       removeSubject(id);
@@ -27,7 +37,7 @@ function AttendanceBox({ subjectName , subjectId }) {
       </Pressable>
       <Text style={styles.attendanceText}>{subjectName}</Text>
       <View style={styles.rightSection}>
-        <Text style={styles.attendancePerc}>{`${attendancePerc()}%`}</Text>
+        <Text style={styles.attendancePerc}>{`${attendancePerc}%`}</Text>
        
       </View>
     </Pressable>

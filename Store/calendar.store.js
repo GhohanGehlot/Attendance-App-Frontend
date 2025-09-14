@@ -8,7 +8,9 @@ export const useStore = create(
     (set, get) => ({
       attendance: {},
       attendanceTracker : { present : 0 , absent : 0},
-      attendancePerc : () => {
+
+      
+       attendancePerc : () => {
         const {present , absent} = get().attendanceTracker;
         if(present + absent === 0) return 0 ;
         return Math.floor((present/(present + absent)) * 100)
@@ -48,6 +50,12 @@ export const useStore = create(
       merge: (persistedState, currentState) => ({
         ...currentState,
         ...persistedState,
+        attendancePerc: currentState.attendancePerc, 
+        markPresent: currentState.markPresent,
+        markAbsent: currentState.markAbsent,
+        clearAttendance: currentState.clearAttendance,
+        presentAttendanceTracker: currentState.presentAttendanceTracker,
+        absentAttendanceTracker: currentState.absentAttendanceTracker
       }),
     }
   )
