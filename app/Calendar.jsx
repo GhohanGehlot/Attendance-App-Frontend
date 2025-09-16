@@ -18,6 +18,7 @@ export default function Calendar({ route }) {
   const markAbsent = useStore((state) => state.markAbsent);
   const clearAttendance = useStore((state) => state.clearAttendance);
   const attendancePerc = useStore((state) => state.attendancePerc);
+  const avgAttendance = useStore((state) => state.avgAttendance);
   
 
 
@@ -28,6 +29,7 @@ export default function Calendar({ route }) {
     }
     markPresent(id ,date);
     setVisibleMenu(false);
+    ;
     
                   
                       
@@ -46,12 +48,9 @@ export default function Calendar({ route }) {
     if(attendance[id]?.days[date] === ""){
       return;
     }
-
-
-    clearAttendance(id ,date);
-    
-    
+    clearAttendance(id ,date);   
     setVisibleMenu(false);
+    
 
    
   }
@@ -82,35 +81,37 @@ export default function Calendar({ route }) {
                 dayComponent={({ date }) => {
 
                   const status = attendance[id]?.days[date.dateString];
+                  const isCurrentDay = menuDate === date.dateString;
                   
                  return(
-                  <View style={{height: 35 , width: 45 , alignItems: "center" , backgroundColor: status === "present" ? "green" : status === "absent" ? "red" : "white" }}>
-                    <Pressable onPress={() => {
-                      
-                      setMenuDate(date.dateString)
-                      setVisibleMenu(true);
-                      
-                      
-                      }}>
-                      <Text style= {{fontSize: 15 }}>{date.day}</Text>
-                    </Pressable>
-                    
-
-                    {visibleMenu && menuDate === date.dateString && (
-                     
+                  <View
+                      style={{
+                          height: 35,
+                          width: 45,
+                          alignItems: "center",
+                          backgroundColor:
+                            status === "present" ? "green" : status === "absent" ? "red" : "white",
+                        }}
+                      >
                         <Menu
-                          visible={visibleMenu}
+                          visible={visibleMenu && isCurrentDay}
                           onDismiss={() => setVisibleMenu(false)}
-                          anchor={<Text>{date.day}</Text>}
+                          anchor={
+                            <Pressable
+                              onPress={() => {
+                                setMenuDate(date.dateString);
+                                setVisibleMenu(true);
+                              }}
+                            >
+                              <Text style={{ fontSize: 15 }}>{date.day}</Text>
+                            </Pressable>
+                          }
                         >
                           <Menu.Item title="Present" onPress={() => present(date.dateString)} />
                           <Menu.Item title="Absent" onPress={() => absent(date.dateString)} />
                           <Menu.Item title="Clear" onPress={() => Clear(date.dateString)} />
-
                         </Menu>
-                     
-                    )}
-                  </View>
+                      </View>
                  ) 
                 }}         
             />      

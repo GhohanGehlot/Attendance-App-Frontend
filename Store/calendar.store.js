@@ -9,14 +9,6 @@ export const useStore = create(
       
       attendance : {},
 
-      addSubjectAttendance: (subjectId) => set((state) => ({
-            attendance: {
-              ...state.attendance,
-              [subjectId]: { days: {}, attendanceTracker: { present: 0, absent: 0 } }
-            }
-          })),
-      
-
       
        attendancePerc : (subjectId) => {
         const tracker = get().attendance[subjectId]?.attendanceTracker || { present : 0 , absent : 0};
@@ -106,22 +98,38 @@ export const useStore = create(
 
         
       }}),
+
+
+      removeAttendance : (subjectId) => set((state) => {
+        const newAttendance = { ...state.attendance};
+        delete newAttendance[subjectId];
+        return { attendance : newAttendance}
+      }),
+
+      avgAttendance : (subjectId) =>  {
+
+        const attendance = get().attendance;
+
+        let totalPresent = 0;
+        let totalDays = 0;
+        
+        Object.values(attendance).forEach(sub => {
+          const tracker = sub?.attendanceTracker || { present: 0, absent: 0 };
+          totalPresent += tracker.present;
+          totalDays += tracker.present + tracker.absent;
+        })
+        
+      if(totalDays === 0) return 0;
+
+      return ((totalPresent/totalDays) * 100).toFixed(1);
+        
+      }
       
     }),
     {
+    
       name: "calendar-storage", 
       storage: createJSONStorage(() => AsyncStorage),
-
-      merge: (persistedState, currentState) => ({
-        ...currentState,
-        ...persistedState,
-        attendancePerc: currentState.attendancePerc, 
-        markPresent: currentState.markPresent,
-        markAbsent: currentState.markAbsent,
-        clearAttendance: currentState.clearAttendance,
-        presentAttendanceTracker: currentState.presentAttendanceTracker,
-        absentAttendanceTracker: currentState.absentAttendanceTracker
-      }),
     }
   )
 );

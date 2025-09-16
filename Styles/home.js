@@ -25,10 +25,16 @@ export const styles = StyleSheet.create({
     color: "#333",
   },
 
-  attendancePerc: {
+  attendancePercPositive: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "#4CAF50", // green % = positive
+    color: "#4CAF50", 
+  },
+
+  attendancePercNegative: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "red",
   },
 
   rightSection: {
@@ -37,7 +43,7 @@ export const styles = StyleSheet.create({
   },
   fab: {
   position: "absolute",
-  bottom: 30,   // distance from bottom
+  bottom: 30,   
   right: 30,    // distance from right
   width: 60,
   height: 60,

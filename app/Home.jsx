@@ -5,6 +5,9 @@ import AddButton from "../components/floatingAdd";
 import { useState } from "react";
 import { styles } from "../Styles/home.js";
 import { useSubject } from "../Store/subject.store.js";
+import { useStore } from "../Store/calendar.store.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 
 
@@ -15,15 +18,24 @@ export default function Home(){
 
    const subjects = useSubject((state) => state.subjects);
    const setSubject = useSubject((state) => state.setSubject);
+   const avgAttendance = useStore((state) => state.avgAttendance);
    
 
   function onPress(){
+    if(subjectName === '') return;
      setModalVisible(false);
      setSubject(subjectName);
-     setSubjectName('');    
+     setSubjectName(''); 
+      console.log(subjects) 
+     
 
+     for( let i = 0 ; i < subjects.length ; i++){
+     
+      console.log(subjects[i].id);
+      avgAttendance(subjects[i].id);
+      
+     }
   }
-  
 
     return(
       <SafeAreaView style={{ flex: 1 }}>

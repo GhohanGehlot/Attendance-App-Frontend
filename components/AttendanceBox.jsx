@@ -3,6 +3,7 @@ import { styles } from "../Styles/home.js";
 import { useNavigation } from "expo-router";
 import { useSubject } from "../Store/subject.store.js";
 import { useStore } from "../Store/calendar.store.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 function AttendanceBox({ subjectName , subjectId }) {
@@ -10,11 +11,12 @@ function AttendanceBox({ subjectName , subjectId }) {
     const navigate = useNavigation();
     
   const removeSubject = useSubject((state) => state.removeSubject);
+  const subjectAttendance = useStore((state) => state.attendance[subjectId]);
+  const removeAttendance = useStore((state) => state.removeAttendance);
 
- const subjectAttendance = useStore((state) => state.attendance[subjectId])
+  
 
   const tracker = subjectAttendance?.attendanceTracker ?? {present : 0 , absent : 0};
-  
    const attendancePerc = tracker.present + tracker.absent === 0 
      ? 0 
    : Math.floor((tracker.present / (tracker.present + tracker.absent)) * 100);
@@ -22,7 +24,11 @@ function AttendanceBox({ subjectName , subjectId }) {
 
     function onDelete(id){
       removeSubject(id);
+      removeAttendance(id);
+      
     }
+
+    
    
 
   return (
@@ -35,7 +41,7 @@ function AttendanceBox({ subjectName , subjectId }) {
       </Pressable>
       <Text style={styles.attendanceText}>{subjectName}</Text>
       <View style={styles.rightSection}>
-        <Text style={styles.attendancePerc}>{`${attendancePerc}%`}</Text>
+        <Text style={ [attendancePerc >= 75 ? styles.attendancePercPositive : styles.attendancePercNegative]}>{`${attendancePerc}%`}</Text>
        
       </View>
     </Pressable>
