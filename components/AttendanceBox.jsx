@@ -11,12 +11,20 @@ function AttendanceBox({ subjectName , subjectId }) {
     const navigate = useNavigation();
     
   const removeSubject = useSubject((state) => state.removeSubject);
+<<<<<<< HEAD
   const subjectAttendance = useStore((state) => state.attendance[subjectId]);
   const removeAttendance = useStore((state) => state.removeAttendance);
 
   
 
   const tracker = subjectAttendance?.attendanceTracker ?? {present : 0 , absent : 0};
+=======
+  const subjectAttendance = useStore((state) => state.attendance[subjectId])
+
+  const tracker = subjectAttendance?.attendanceTracker ?? {present : 0 , absent : 0};
+
+  
+>>>>>>> edd9c7a99d2c1191b477a7c4c775d55142596747
    const attendancePerc = tracker.present + tracker.absent === 0 
      ? 0 
    : Math.floor((tracker.present / (tracker.present + tracker.absent)) * 100);

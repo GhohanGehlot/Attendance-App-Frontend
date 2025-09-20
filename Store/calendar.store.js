@@ -3,7 +3,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
+<<<<<<< HEAD
 export const useStore = create(
+=======
+
+export const useStore = create( 
+>>>>>>> edd9c7a99d2c1191b477a7c4c775d55142596747
   persist(
     (set, get) => ({
       // root data: per-subject attendance

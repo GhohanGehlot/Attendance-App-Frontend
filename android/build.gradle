@@ -12,6 +12,7 @@ buildscript {
   }
 }
 
+<<<<<<< HEAD
 def reactNativeAndroidDir = new File(
   providers.exec {
     workingDir(rootDir)
@@ -27,6 +28,10 @@ allprojects {
       url(reactNativeAndroidDir)
     }
 
+=======
+allprojects {
+  repositories {
+>>>>>>> edd9c7a99d2c1191b477a7c4c775d55142596747
     google()
     mavenCentral()
     maven { url 'https://www.jitpack.io' }

@@ -17,7 +17,11 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
+<<<<<<< HEAD
       "package": "com.ghohan.attendance"
+=======
+      "package": "com.ghohan.attendancee"
+>>>>>>> edd9c7a99d2c1191b477a7c4c775d55142596747
     },
     "web": {
       "bundler": "metro",
@@ -34,7 +38,9 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
@@ -44,6 +50,11 @@
       "eas": {
         "projectId": "55e856d9-7ea0-46a6-8539-59fb7dae31cf"
       }
+<<<<<<< HEAD
     }
+=======
+    },
+    "owner": "ghohan"
+>>>>>>> edd9c7a99d2c1191b477a7c4c775d55142596747
   }
 }

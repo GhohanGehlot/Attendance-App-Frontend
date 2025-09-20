@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 <resources>
   <color name="splashscreen_background">#ffffff</color>
   <color name="iconBackground">#ffffff</color>
   <color name="colorPrimary">#023c69</color>
   <color name="colorPrimaryDark">#ffffff</color>
+=======
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<resources>
+  <color name="splashscreen_background">#FFFFFF</color>
+>>>>>>> edd9c7a99d2c1191b477a7c4c775d55142596747
 </resources>

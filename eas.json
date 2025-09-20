@@ -1,6 +1,10 @@
 {
   "cli": {
+<<<<<<< HEAD
     "version": ">= 16.19.2",
+=======
+    "version": ">= 16.19.1",
+>>>>>>> edd9c7a99d2c1191b477a7c4c775d55142596747
     "appVersionSource": "remote"
   },
   "build": {
@@ -9,9 +13,12 @@
       "distribution": "internal"
     },
     "preview": {
+<<<<<<< HEAD
       "android": {
         "buildType": "apk"
       },
+=======
+>>>>>>> edd9c7a99d2c1191b477a7c4c775d55142596747
       "distribution": "internal"
     },
     "production": {
