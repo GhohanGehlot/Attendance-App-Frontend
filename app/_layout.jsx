@@ -1,9 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer"
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from "./Home";
-import Login from "./Login";
-import { useState } from "react";
-import Signup from "./Signup";
 import Calendar from "./Calendar";
 import { PaperProvider } from "react-native-paper";
 import { Text, View } from "react-native";
@@ -12,11 +9,11 @@ import { useStore } from "../Store/calendar.store";
 
 export default function RootLayout() {
 
-    const [isLoggedIn , setIsLoggedIn] = useState(true);
+ 
 
     
 
-    return isLoggedIn ? <Layout/> : <AuthLayout/>
+    return  <Layout/> 
 
     
 }
@@ -62,7 +59,7 @@ export function Layout() {
         }}
       >
         <Drawer.Screen name="Nmites lifeLine" component={CalendarLayout} />
-        {/* <Drawer.Screen name="Logout" component={AuthLayout} /> */}
+        
       </Drawer.Navigator>
     </PaperProvider>
   );
@@ -71,23 +68,6 @@ export function Layout() {
 
 
 
-export  function AuthLayout(){
-
-    const Stack = createStackNavigator();
-    
-     return (
-
-      <PaperProvider>
-             
-          <Stack.Navigator screenOptions={{headerShown:false}}>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Signup" component={Signup} />
-          </Stack.Navigator>
-
-      </PaperProvider>
-   
-  );
-}
 
 export function CalendarLayout(){
     const Stack = createStackNavigator();
